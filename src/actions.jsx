@@ -4,7 +4,6 @@ const URL = import.meta.env.VITE_BASE_URL;
 
 // Create action
 export const createAction = async ({ request }) => {
-  console.log('here');
   const formData = await request.formData();
   const newPet = {
     name: formData.get('name'),
@@ -28,9 +27,8 @@ export const updateAction = async ({ request, params }) => {
     name: formData.get('name'),
     age: formData.get('age'),
   };
-  console.log(updatedPet);
 
-  await fetch(`${URL}${params.id}`, {
+  await fetch(`${URL}${params.id}/`, {
     method: 'put',
     headers: {
       'Content-Type': 'application/json',
@@ -38,12 +36,12 @@ export const updateAction = async ({ request, params }) => {
     body: JSON.stringify(updatedPet),
   });
 
-  return redirect('/'); //go back to the landing page
+  return redirect(`/pets/${params.id}/`);
 };
 
 // Delete action
 export const deleteAction = async ({ params }) => {
-  await fetch(`${URL}${params.id}`, {
+  await fetch(`${URL}${params.id}/`, {
     method: 'delete',
   });
 
